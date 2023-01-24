@@ -1,5 +1,7 @@
 import '../css/styles.css';
+import "simplelightbox/dist/simple-lightbox.min.css";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import SimpleLightbox from "simplelightbox";
 import { fetchImages } from "./fetchimages";
 import { markupGallery } from "./markupGallery";
 
@@ -7,10 +9,10 @@ const searchForm = document.querySelector(".search-form");
 const gallery = document.querySelector(".gallery");
 const loadMoreButton = document.querySelector(".load-more");
 let page = 1;
-let totalPages = 5;
+let totalPages = 40;
 let query = "";
 
-searchForm.searchQuery.value = "вишни спелая";
+searchForm.searchQuery.value = "пелая";
 
 
 function imageSearch(event) {
@@ -20,7 +22,7 @@ function imageSearch(event) {
     loadMoreButton.classList.add("hide");
     gallery.innerHTML = "";
     page = 1;
-    let totalPages = 5;
+    totalPages = 40;
 
     fetchImages(query, page).then((galleryArray) => {
         if (galleryArray.hits.length == 0) {
@@ -28,31 +30,28 @@ function imageSearch(event) {
             return;
         }
         galleryArray.hits.map((image) => {
-           // gallery.insertAdjacentHTML("beforeend", markupGallery(image))
+            gallery.insertAdjacentHTML("beforeend", markupGallery(image));
         });
+        SimpleLightbox.refresh();
+        Notify.success(`Hooray! We found ${galleryArray.totalHits} images.`);
         page += 1;
         loadMoreButton.classList.remove("hide");
-        console.log(galleryArray.totalHits);
-        console.log("totalPages=",totalPages);
     })
 }
 
 function imagePagination() {
     fetchImages(query, page).then((galleryArray) => {
         if (totalPages >= galleryArray.totalHits) {
-            console.log("ОТЛАДКА galleryArray.totalHits = ",galleryArray.totalHits);
-            console.log("ОТЛАДКА totalPages = ",totalPages);
             Notify.failure("We're sorry, but you've reached the end of search results.");
             return;
         }
 
         galleryArray.hits.map((image) => {
-          //  gallery.insertAdjacentHTML("beforeend", markupGallery(image))
+            gallery.insertAdjacentHTML("beforeend", markupGallery(image));
         });
+        SimpleLightbox.refresh();
         page += 1;
-        totalPages += 5;
-        console.log(galleryArray.totalHits);
-        console.log("totalPages=",totalPages);
+        totalPages += 40;
     });
 }
 
