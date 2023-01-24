@@ -20,4 +20,5 @@ export function markupGallery(image) {
                 </p>
             </div>
             </div>`;
+    
 }

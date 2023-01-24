@@ -1,7 +1,8 @@
 import '../css/styles.css';
-import "simplelightbox/dist/simple-lightbox.min.css";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import simpleLightbox from "simplelightbox";
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
+
 import { fetchImages } from "./fetchimages";
 import { markupGallery } from "./markupGallery";
 
@@ -32,7 +33,7 @@ function imageSearch(event) {
         galleryArray.hits.map((image) => {
             gallery.insertAdjacentHTML("beforeend", markupGallery(image));
         });
-        simpleLightbox.refresh();
+        lightbox.refresh();
         Notify.success(`Hooray! We found ${galleryArray.totalHits} images.`);
         page += 1;
         loadMoreButton.classList.remove("hide");
@@ -49,7 +50,7 @@ function imagePagination() {
         galleryArray.hits.map((image) => {
             gallery.insertAdjacentHTML("beforeend", markupGallery(image));
         });
-        simpleLightbox.refresh();
+        lightbox.refresh();
         page += 1;
         totalPages += 40;
     });
@@ -60,4 +61,3 @@ searchForm.addEventListener("submit", imageSearch);
 loadMoreButton.addEventListener("click", imagePagination);
 
 const lightbox = new SimpleLightbox('.gallery a', { captionsData: "alt", captionDelay: 250, });
-console.log(lightbox);
