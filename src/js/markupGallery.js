@@ -1,6 +1,6 @@
 export function markupGallery(image) {
     return `<div class="photo-card">
-            <a href=${image.largeImageURL}><img src=${image.webformatURL} alt="${image.tags}" loading="lazy" height=200 /></a>
+            <a href="${image.largeImageURL}"><img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" height=200 /></a>
             <div class="info">
                 <p class="info-item">
                     <b>Likes</b>
