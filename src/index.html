@@ -8,13 +8,12 @@
   </head>
   <body>
     <form class="search-form" id="search-form">
-      <input
-        type="text"
-        name="searchQuery"
-        autocomplete="off"
-        placeholder="Search images..."
-      />
-      <button type="submit">Search</button>
+      <input type="text" name="searchQuery" autocomplete="off" placeholder="Search images..."/>
+      <button class="button-submit" type="submit">
+        <svg class="find-icon" width="22" height="22">
+          <use href="./images/icons.svg#icon-search"></use>
+        </svg>
+      </button>
     </form>
 
     <div class="gallery">

@@ -1,20 +1,18 @@
 import '../css/styles.css';
+import "simplelightbox/dist/simple-lightbox.min.css";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from "simplelightbox";
-import "simplelightbox/dist/simple-lightbox.min.css";
-
 import { fetchImages } from "./fetchimages";
 import { markupGallery } from "./markupGallery";
 
 const searchForm = document.querySelector(".search-form");
 const gallery = document.querySelector(".gallery");
 const loadMoreButton = document.querySelector(".load-more");
+const lightbox = new SimpleLightbox('.gallery a', { captionsData: "alt", captionDelay: 250, });
+
 let page = 1;
 let totalPages = 40;
 let query = "";
-
-searchForm.searchQuery.value = "пелая";
-
 
 function imageSearch(event) {
     event.preventDefault();
@@ -42,6 +40,8 @@ function imageSearch(event) {
 
 function imagePagination() {
     fetchImages(query, page).then((galleryArray) => {
+        const { height: cardHeight } = document.querySelector(".gallery").firstElementChild.getBoundingClientRect();
+
         if (totalPages >= galleryArray.totalHits) {
             Notify.failure("We're sorry, but you've reached the end of search results.");
             return;
@@ -53,11 +53,13 @@ function imagePagination() {
         lightbox.refresh();
         page += 1;
         totalPages += 40;
+
+        window.scrollBy({
+            top: cardHeight * 2,
+            behavior: "smooth",
+        });
     });
 }
 
-
 searchForm.addEventListener("submit", imageSearch);
 loadMoreButton.addEventListener("click", imagePagination);
-
-const lightbox = new SimpleLightbox('.gallery a', { captionsData: "alt", captionDelay: 250, });
