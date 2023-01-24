@@ -1,6 +1,4 @@
 export function markupGallery(image) {
-    console.log(image);
-
     return `<div class="photo-card">
             <img src=${image.webformatURL} alt="${image.tags}" loading="lazy" height=200 />
             <div class="info">
@@ -22,7 +20,6 @@ export function markupGallery(image) {
                 </p>
             </div>
             </div>`;
-
 }
 
 // largeImageURL - ссылка на большое изображение.
