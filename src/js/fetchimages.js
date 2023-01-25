@@ -12,11 +12,6 @@ export async function fetchImages(query, page) {
         per_page: 40,
         page: page,
     }
-
-    try {
-        const response = await axios.get(URL, { params });
-        return response.data;
-    } catch (error) {
-        console.log(error);
-    }
+    const response = await axios.get(URL, { params });
+    return response.data;    
 }

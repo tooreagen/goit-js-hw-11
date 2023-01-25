@@ -17,6 +17,10 @@ let query = "";
 function imageSearch(event) {
     event.preventDefault();
     query = event.target.searchQuery.value;
+
+    if (!query) {
+        return;
+    }
     
     loadMoreButton.classList.add("hide");
     gallery.innerHTML = "";
@@ -33,9 +37,12 @@ function imageSearch(event) {
         });
         lightbox.refresh();
         Notify.success(`Hooray! We found ${galleryArray.totalHits} images.`);
+        
+        if (galleryArray.totalHits / totalPages > 1) {
+           loadMoreButton.classList.remove("hide"); 
+        }
         page += 1;
-        loadMoreButton.classList.remove("hide");
-    })
+    }).catch((error) => { console.log(error); })
 }
 
 function imagePagination() {
@@ -58,6 +65,10 @@ function imagePagination() {
             top: cardHeight * 2,
             behavior: "smooth",
         });
+
+        if (totalPages >= galleryArray.totalHits) {
+            loadMoreButton.classList.add("hide"); 
+        }
     });
 }
 
